@@ -1,0 +1,7 @@
+interface:
+  display_name: "Q版形象生成"
+  short_description: "参考图生成三视图和一致表情包"
+  default_prompt: "Use $q-character-generator to turn the uploaded reference image into a Q-version 3-heads-tall three-view character sheet and 8 consistent stickers."
+
+policy:
+  allow_implicit_invocation: true
