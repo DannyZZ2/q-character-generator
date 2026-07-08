@@ -1,7 +1,7 @@
 interface:
   display_name: "Q版形象生成"
-  short_description: "参考图生成保比例三视图和一致表情包"
-  default_prompt: "Use $q-character-generator to turn the uploaded reference image into a Q-version three-view character sheet that preserves the source body shape and head-to-body ratio, then generate 8 consistent stickers."
+  short_description: "参考图生成三头身三视图和一致表情包"
+  default_prompt: "Use $q-character-generator to turn the uploaded reference image into a balanced Q-version 3-heads-tall three-view character sheet with a normal cute head size, then generate 8 consistent stickers."
 
 policy:
   allow_implicit_invocation: true
