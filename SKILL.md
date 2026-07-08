@@ -1,11 +1,11 @@
 ---
 name: "q-character-generator"
-description: "Create a consistent Q-version 3-heads-tall cartoon character package from one uploaded reference image, with a normal cute head size and no over-enlarged head. Use when the user asks for Q版形象生成, Q-version character generation, a chibi three-view sheet, or a consistent sticker pack: generate a balanced 3-heads-tall three-view character sheet, generate 8 independent reaction stickers from that sheet, write a character consistency anchor Markdown file, verify the stickers against the anchor, ask the user for confirmation, then package the approved stickers and Markdown files."
+description: "Create a consistent Q-version 3-heads-tall cartoon character delivery folder from one uploaded reference image, with a normal cute head size and no over-enlarged head. Use when the user asks for Q版形象生成, Q-version character generation, a chibi three-view sheet, or a consistent sticker pack: generate a balanced 3-heads-tall three-view character sheet, generate 8 independent reaction stickers from that sheet, write a character consistency anchor Markdown file, verify the stickers against the anchor, ask the user for confirmation, then organize the approved stickers and Markdown files into one ordinary delivery folder."
 ---
 
 # Q版形象生成
 
-Use this skill when the user uploads one character reference image and wants a reusable Q-version cartoon character workflow: balanced 3-heads-tall three-view design, 8 independent stickers, a character anchor Markdown file, consistency verification, user confirmation, and final packaging.
+Use this skill when the user uploads one character reference image and wants a reusable Q-version cartoon character workflow: balanced 3-heads-tall three-view design, 8 independent stickers, a character anchor Markdown file, consistency verification, user confirmation, and final folder delivery.
 
 This skill produces bitmap assets. Use the built-in `image_gen` tool by default. Do not use CLI fallback unless the user explicitly asks for CLI/API/model control.
 
@@ -29,7 +29,8 @@ Default assumptions:
 - The three-view sheet is the primary visual anchor for the sticker set.
 - Use balanced 3-heads-tall Q-version proportions. The head should be about one third of the total height, cute but not oversized; keep enough torso and leg length so the character does not look like a giant-head mascot.
 - Preserve the reference character's recognizable body silhouette, outfit fit, and identity cues within the 3-heads-tall constraint.
-- Final packaging waits for explicit user confirmation.
+- Final delivery waits for explicit user confirmation.
+- "Package" means collect the final files into one ordinary folder. Do not create a `.zip` or other compressed archive unless the user explicitly asks for a compressed file.
 
 ## Output Structure
 
@@ -55,13 +56,7 @@ character-anchor.md
 consistency-check.md
 ```
 
-After user confirmation, create:
-
-```text
-q-character-generator-<short-slug>.zip
-```
-
-The zip must include the 8 stickers, `00-three-view.png`, `character-anchor.md`, and `consistency-check.md`.
+After user confirmation, deliver the same output directory as the final delivery folder. It must contain the 8 stickers, `00-three-view.png`, `character-anchor.md`, and `consistency-check.md`.
 
 ## Workflow
 
@@ -83,9 +78,9 @@ The zip must include the 8 stickers, `00-three-view.png`, `character-anchor.md`,
 8. Verify each sticker against `character-anchor.md`.
 9. Write `consistency-check.md`.
 10. Show the user the output directory and ask for confirmation.
-11. Only after confirmation, zip the deliverables.
+11. Only after confirmation, finalize the output directory as the delivery folder.
 
-Do not zip before the user confirms.
+Do not create a zip before or after user confirmation unless the user explicitly asks for a compressed archive.
 
 ## Three-View Generation Prompt Template
 
@@ -259,9 +254,9 @@ Reference image: `00-three-view.png`
 - Same 2D chibi mascot style: pass/fail.
 - No unwanted text, watermark, logo, extra character, or unrelated prop: pass/fail.
 
-## Packaging Status
+## Delivery Status
 
-Not packaged yet. Waiting for user confirmation before creating the final archive.
+Not finalized yet. Waiting for user confirmation before declaring the output folder as the final delivery folder.
 ```
 
 If any sticker fails a hard consistency rule, regenerate only that sticker with a targeted prompt. Do not regenerate the entire set unless multiple images fail for the same systemic reason.
@@ -275,15 +270,15 @@ After verification, show:
 - `character-anchor.md`
 - `consistency-check.md`
 
-Ask the user to confirm before packaging.
+Ask the user to confirm before final folder delivery.
 
 Use concise wording:
 
 ```text
-我已生成并按锚点检查完成，暂时还没打包。请确认这 8 张表情包和三视图是否可以作为最终版；你确认后我再压缩交付。
+我已生成并按锚点检查完成，暂时还没作为最终交付文件夹确认。请确认这 8 张表情包和三视图是否可以作为最终版；你确认后我会把这些文件整理在同一个文件夹里交付，不生成压缩包。
 ```
 
-## Packaging
+## Final Folder Delivery
 
 Only after explicit user confirmation:
 
@@ -299,8 +294,10 @@ Only after explicit user confirmation:
    - `08-salute-received.png`
    - `character-anchor.md`
    - `consistency-check.md`
-2. Create a zip beside the output folder.
-3. Report the zip path.
+2. Keep these files together in the same output directory as the final delivery folder.
+3. Report the final folder path.
+
+Do not create `.zip`, `.tar`, `.7z`, `.rar`, or any other compressed archive unless the user explicitly asks for a compressed file.
 
 Do not delete source images or generated originals unless the user explicitly asks.
 
@@ -310,6 +307,6 @@ If the user requests transparent stickers, follow the `imagegen` skill's built-i
 
 - Generate on a perfectly flat chroma-key background.
 - Remove the background locally using the installed chroma-key helper.
-- Validate alpha before packaging.
+- Validate alpha before final folder delivery.
 
 Do not switch to CLI native transparency without explicit user confirmation.
